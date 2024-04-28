@@ -1,6 +1,6 @@
 package com.didiglobal.booster.task.so
 
-import com.android.build.gradle.api.BaseVariant
+import com.android.build.api.variant.Variant
 import com.didiglobal.booster.gradle.dependencies
 import com.didiglobal.booster.kotlinx.CSI_CYAN
 import com.didiglobal.booster.kotlinx.CSI_RESET
@@ -13,12 +13,12 @@ import java.util.jar.JarFile
 internal open class ListSharedLibrary : DefaultTask() {
 
     @get:Internal
-    lateinit var variant: BaseVariant
+    lateinit var variant: Variant
 
     @TaskAction
     fun run() {
         variant.dependencies.forEach { result ->
-            when (result.file.extension.toLowerCase()) {
+            when (result.file.extension.lowercase()) {
                 "aar", "jar" -> {
                     JarFile(result.file).use { jar ->
                         jar.entries().asSequence().filter {
